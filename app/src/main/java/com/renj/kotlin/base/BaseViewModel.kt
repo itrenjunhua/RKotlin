@@ -1,6 +1,9 @@
 package com.renj.kotlin.base
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * ======================================================================
@@ -15,5 +18,10 @@ import androidx.lifecycle.ViewModel
  *
  * ======================================================================
  */
-class BaseViewModel : ViewModel() {
+open class BaseViewModel : ViewModel() {
+    fun launchUI(block:suspend CoroutineScope.() -> Unit){
+        viewModelScope.launch {
+            block()
+        }
+    }
 }

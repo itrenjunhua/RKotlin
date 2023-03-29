@@ -34,9 +34,9 @@ object OkHttpUtil {
      */
     fun initOkHttp(): OkHttpClient {
         val builder: OkHttpClient.Builder = OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
 
         // 增加网络状态监听拦截器
         builder.addInterceptor { chain ->
