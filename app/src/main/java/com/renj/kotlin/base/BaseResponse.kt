@@ -13,8 +13,8 @@ package com.renj.kotlin.base
  *
  * ======================================================================
  */
-data class BaseResponse<T>(
-    val code: Int,
-    val msg: String,
-    val data: T
-)
+open class BaseResponse<T> {
+    var errorCode: Int = 0
+    var errorMsg: String? = ""
+    var data: T? = null
+}

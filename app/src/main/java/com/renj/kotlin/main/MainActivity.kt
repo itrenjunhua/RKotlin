@@ -14,7 +14,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun initViewAndData() {
-        viewModel?.getMainPageData()
+        viewModel?.getMainPageData(1)
     }
 
     override fun initDataCallback() {

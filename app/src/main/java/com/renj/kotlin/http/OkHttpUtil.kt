@@ -1,11 +1,11 @@
 package com.renj.kotlin.http
 
+import com.renj.kotlin.http.error.NetworkException
 import com.renj.kotlin.utils.AndroidUtils
 import com.renj.kotlin.utils.Logger.d
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import java.util.ArrayList
 import java.util.concurrent.TimeUnit
 
 /**

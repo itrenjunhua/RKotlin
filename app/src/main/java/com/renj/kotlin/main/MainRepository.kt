@@ -1,8 +1,7 @@
 package com.renj.kotlin.main
 
 import com.renj.kotlin.base.BaseRepository
-import com.renj.kotlin.base.BaseResponse
-import kotlinx.coroutines.delay
+import com.renj.kotlin.bean.MainResponse
 
 /**
  * ======================================================================
@@ -18,10 +17,9 @@ import kotlinx.coroutines.delay
  * ======================================================================
  */
 class MainRepository : BaseRepository() {
-    suspend fun getMainPageData(): BaseResponse<String> {
-        return request {
-            delay(2000)
-            return@request BaseResponse(200, "success", "主页数据")
+    suspend fun getMainPageData(pageNo: Int): MainResponse {
+        return requestHttp {
+            return@requestHttp apiService.getHomeList(pageNo)
         }
     }
 }

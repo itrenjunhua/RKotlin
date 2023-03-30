@@ -2,7 +2,9 @@ package com.renj.kotlin.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
+import com.renj.kotlin.http.error.AddressError
+import com.renj.kotlin.http.error.ServiceError
+import com.renj.kotlin.utils.Logger
 import kotlinx.coroutines.launch
 
 /**
@@ -19,9 +21,22 @@ import kotlinx.coroutines.launch
  * ======================================================================
  */
 open class BaseViewModel : ViewModel() {
-    fun launchUI(block:suspend CoroutineScope.() -> Unit){
+    fun launchUI(
+        block: suspend () -> Unit,
+        addressError: (AddressError) -> Unit? = { e -> e.message?.let { Logger.e(it) } },
+        serviceError: (ServiceError) -> Unit? = { e -> e.message?.let { Logger.e(it) } },
+        otherError: (Error) -> Unit? = { e -> e.message?.let { Logger.e(it) } },
+    ) {
         viewModelScope.launch {
-            block()
+            try {
+                block()
+            } catch (e: AddressError) {
+                addressError(e)
+            } catch (e: ServiceError) {
+                serviceError(e)
+            } catch (e: Error) {
+                otherError(e)
+            }
         }
     }
 }

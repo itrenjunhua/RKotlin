@@ -1,15 +1,4 @@
-package com.renj.kotlin.http
-
-import okhttp3.OkHttpClient
-import okhttp3.Interceptor
-import kotlin.Throws
-import com.renj.kotlin.http.NetworkException
-import com.renj.kotlin.http.OkHttpUtil
-import com.renj.kotlin.http.RetrofitUtil
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.IllegalStateException
-import kotlin.jvm.Volatile
+package com.renj.kotlin.http.error
 
 /**
  * ======================================================================

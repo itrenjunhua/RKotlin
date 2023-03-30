@@ -98,8 +98,10 @@ class RetrofitUtil private constructor() {
      *
      * @param apiServerClass 必须是通过 `.addApiServerClass` 方法初始化的
     </T> */
-    fun <T> getApiService(apiServerClass: Class<T>): T? {
-        return apiServiceMap[apiServerClass] as T?
+    fun <T> getApiService(apiServerClass: Class<T>): T {
+        val serviceClass =
+            apiServiceMap[apiServerClass] ?: throw IllegalStateException("Retrofit 初始化失败")
+        return serviceClass as T
     }
 
     companion object {

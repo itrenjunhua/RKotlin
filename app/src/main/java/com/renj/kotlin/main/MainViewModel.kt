@@ -2,6 +2,7 @@ package com.renj.kotlin.main
 
 import androidx.lifecycle.MutableLiveData
 import com.renj.kotlin.base.BaseViewModel
+import com.renj.kotlin.kt.string
 
 /**
  * ======================================================================
@@ -23,9 +24,23 @@ class MainViewModel : BaseViewModel() {
 
     val mainData = MutableLiveData<String?>()
 
-    fun getMainPageData() {
-        launchUI {
-            mainData.value = repository.getMainPageData().data
-        }
+    fun getMainPageData(pageNo: Int) {
+        launchUI(
+            block = suspend {
+                mainData.value = repository.getMainPageData(pageNo).data?.datas?.string {
+                    "\n标题：${it.title} \n 作者：${it.chapterName}"
+                }
+            },
+            addressError = {
+                it.message?.run {
+                    mainData.value = this
+                }
+            },
+            serviceError = {
+                it.message?.run {
+                    mainData.value = this
+                }
+            }
+        )
     }
 }
