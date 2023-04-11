@@ -6,6 +6,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 /**
  * ======================================================================
@@ -20,7 +23,9 @@ import androidx.lifecycle.ViewModelProvider
  *
  * ======================================================================
  */
-abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity() {
+abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(),
+    CoroutineScope by MainScope() {
+
     protected lateinit var binding: DB
     protected var viewModel: VM? = null
 
@@ -35,7 +40,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
         initDataCallback()
     }
 
-    protected fun <T : ViewModel> createViewModel(modelClass: Class<T>?): T? {
+    protected open fun <T : ViewModel> createViewModel(modelClass: Class<T>?): T? {
         return modelClass?.let {
             ViewModelProvider(
                 this,
@@ -46,12 +51,17 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompa
 
     protected abstract fun getLayoutId(): Int
 
-    abstract fun getViewModelClass(): Class<VM>?
+    protected abstract fun getViewModelClass(): Class<VM>?
 
-    abstract fun initViewAndData()
+    protected abstract fun initViewAndData()
 
-    protected open fun initListener(){
+    protected open fun initListener() {
     }
 
-    abstract fun initDataCallback()
+    protected abstract fun initDataCallback()
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cancel()
+    }
 }
